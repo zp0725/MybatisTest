@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ShopDAO">
+    <resultMap id="shopMap" type="pojo.Shop">
+        <id column="sno" property="Sno"/>
+        <result column="sname" property="Sname"/>
+        <collection property="products" javaType="list" ofType="pojo.Product"
+                    column="sno"
+                    select="getPros"
+        />
+    </resultMap>
+    <select id="getAll" resultMap="shopMap">
+        select* from shop
+    </select>
+    <select id="getPros" resultType="pojo.Product">
+        select sno,pname from product where Sno=#{Sno}
+    </select>
+
+
+
+
+
+</mapper>

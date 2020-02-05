@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AdminDAO">
+    <!-- 动态sql语句-->
+    <!-- 属性名与字段名不一致可以起别名，也可用resultMap-->
+    <resultMap id="AdminMap" type="pojo.Admin">
+        <result column="id" property="id"></result>
+        <result column="username" property="username"></result>
+        <result column="pwd" property="password"></result>
+
+    </resultMap>
+
+
+    <select id="getAll" resultType="pojo.Admin" resultMap="AdminMap">
+        select * from Admin
+        <where>
+            <if test="id!=null">
+               and id=#{id}
+            </if>
+            <if test="username!=null">
+              and username=#{username}
+            </if>
+        </where>
+    </select>
+    <select id="getByIdName" resultType="pojo.Admin">
+        select * from Admin where id=#{id} and username=#{username};
+    </select>
+    <insert id="addAdmin">
+
+        insert into Admin
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id!=null">
+                    id,
+                </if>
+                <if test="username!=null">
+                    username,
+                </if>
+            </trim>
+            values
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="username!=null">
+                     #{username},
+                </if>
+            </trim>
+
+
+
+
+    </insert>
+
+
+</mapper>
